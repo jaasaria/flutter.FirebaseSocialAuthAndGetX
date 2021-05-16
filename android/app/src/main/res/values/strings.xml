@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quest Quiz App</string>
+    <string name="facebook_app_id">276591257494317</string>
+    <string name="fb_login_protocol_scheme">fb276591257494317</string>
+</resources>
