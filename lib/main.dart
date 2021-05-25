@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.pink,
+      ),
       initialBinding: InitialBinding(),
       debugShowCheckedModeBanner: false,
       enableLog: true,

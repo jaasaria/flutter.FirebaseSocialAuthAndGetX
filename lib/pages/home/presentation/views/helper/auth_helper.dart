@@ -5,9 +5,8 @@ import 'package:getx_main_example/pages/home/presentation/controllers/user_contr
 
 void showSnackbarSuccess() {
   if (Get.isSnackbarOpen == false) {
-    Future.delayed(const Duration(seconds: 1)).then((value) {
+    Future.delayed(const Duration(milliseconds: 1500)).then((value) {
       final String? name = Get.find<UserController>().user?.name.toString();
-
       Get.snackbar(
           'Successfully Login:', "Welcome back: ${name?.toUpperCase()}");
     });
@@ -49,4 +48,20 @@ void closeDialogHelper() {
   if (Get.isDialogOpen ?? false) {
     Get.back();
   }
+}
+
+InputDecoration authInputDecoration(BuildContext context) {
+  return InputDecoration(
+    filled: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: Colors.grey.shade300),
+    ),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+  );
 }

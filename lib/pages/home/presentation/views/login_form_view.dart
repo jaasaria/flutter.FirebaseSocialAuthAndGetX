@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper.dart';
+import 'package:textless/textless.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:getx_main_example/pages/home/domain/entity/failure.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/login_controller.dart';
-import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper.dart';
-import 'package:getx_main_example/routes/app_pages.dart';
 
 class LoginFormView extends GetView<LoginController> {
   final authController = Get.find<AuthController>();
@@ -16,50 +15,56 @@ class LoginFormView extends GetView<LoginController> {
       appBar: AppBar(
         title: const Text('Login Your Account'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FormBuilder(
-            key: controller.formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                FormBuilderTextField(
-                  name: 'email',
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Email'),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                    FormBuilderValidators.email(context),
-                  ]),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: FormBuilder(
+          key: controller.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 10),
+              FormBuilderTextField(
+                name: 'email',
+                keyboardType: TextInputType.emailAddress,
+                decoration: authInputDecoration(context).copyWith(
+                  labelText: 'Email',
+                  filled: true,
                 ),
-                const SizedBox(height: 10),
-                FormBuilderTextField(
-                  name: 'password',
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                    FormBuilderValidators.minLength(context, 6),
-                  ]),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context),
+                  FormBuilderValidators.email(context),
+                ]),
+              ),
+              const SizedBox(height: 10),
+              FormBuilderTextField(
+                name: 'password',
+                decoration: authInputDecoration(context).copyWith(
+                  labelText: 'Password',
+                  filled: true,
                 ),
-                const SizedBox(height: 10),
-                MaterialButton(
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    if (controller.formKey.currentState?.saveAndValidate() ??
-                        false) {
-                      final keyField = controller.formKey.currentState;
-                      _handleLogin(keyField!.fields['email']!.value.toString(),
-                          keyField.fields['password']!.value.toString());
-                    }
-                    // print(_formKey.currentState?.value);
-                  },
-                  child: const Text('Login Account',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ],
-            ),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context),
+                  FormBuilderValidators.minLength(context, 6),
+                ]),
+              ),
+              const SizedBox(height: 20),
+              MaterialButton(
+                color: Colors.indigo,
+                onPressed: () {
+                  if (controller.formKey.currentState?.saveAndValidate() ??
+                      false) {
+                    final keyField = controller.formKey.currentState;
+                    _handleLogin(keyField!.fields['email']!.value.toString(),
+                        keyField.fields['password']!.value.toString());
+                  }
+                },
+                child: SizedBox(
+                    width: double.infinity,
+                    child:
+                        'Login Account'.text.color(Colors.white).alignCenter),
+              ),
+            ],
           ),
         ),
       ),

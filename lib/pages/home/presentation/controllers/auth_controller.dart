@@ -34,71 +34,22 @@ class AuthController extends GetxController {
 
   Future<void> loginUser(String email, String password) async {
     loginWrapper(repository.loginUser(email, password));
-
-    // try {
-    //   showDialogHelper();
-    //   await repository.loginUser(email, password);
-    //   showSnackbarSuccess();
-    //   Get.offAllNamed(Routes.AUTH);
-    // } catch (e) {
-    //   showSnackbarFail(Failure(e.toString()));
-    // } finally {
-    //   closeDialogHelper();
-    // }
   }
 
   Future<void> loginAsAnonymous() async {
     loginWrapper(repository.loginUserAsAnonymous());
-
-    // try {
-    //   showDialogHelper();
-    //   await repository.loginUserAsAnonymous();
-    //   showSnackbarSuccess();
-    //   Get.offAllNamed(Routes.AUTH);
-    // } catch (e) {
-    //   showSnackbarFail(Failure(e.toString()));
-    // } finally {
-    //   closeDialogHelper();
-    // }
   }
 
   Future<void> loginWithGoogle() async {
-    try {
-      showDialogHelper();
-      await repository.loginWithGoogle();
-      showSnackbarSuccess();
-      Get.offAllNamed(Routes.AUTH);
-    } catch (e) {
-      showSnackbarFail(Failure(e.toString()));
-    } finally {
-      closeDialogHelper();
-    }
+    loginWrapper(repository.loginWithGoogle());
   }
 
   Future<void> loginWithFacebook() async {
-    try {
-      showDialogHelper();
-      await repository.loginWithFacebook();
-      showSnackbarSuccess();
-      Get.offAllNamed(Routes.AUTH);
-    } catch (e) {
-      showSnackbarFail(Failure(e.toString()));
-    } finally {
-      closeDialogHelper();
-    }
+    loginWrapper(repository.loginWithFacebook());
   }
 
   Future<void> loginWithTwitter() async {
-    try {
-      showDialogHelper();
-      await repository.loginWithTwitter();
-      showSnackbarSuccess();
-      Get.offAllNamed(Routes.AUTH);
-    } catch (e) {
-      showSnackbarFail(Failure(e.toString()));
-    } finally {
-      closeDialogHelper();
-    }
+    loginWrapper(repository.loginWithTwitter());
   }
 
   Future<void> loginWrapper(Future function) async {
@@ -115,6 +66,15 @@ class AuthController extends GetxController {
   }
 
   void logoutUser() {
+    // check for the social auth provider
+    // print(_auth.currentUser?.providerData[0].providerId.toString());
+
+    // final fb = FacebookLogin();
+    // await fb.logOut();
+
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
+    // await googleSignIn.signOut();
+
     repository.logoutUser();
     _storeUser.logoutUser();
   }

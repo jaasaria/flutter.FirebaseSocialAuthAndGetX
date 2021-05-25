@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/register_controller.dart';
+import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper.dart';
 import 'package:textless/textless.dart';
 
 class RegisterView extends GetView<RegisterController> {
@@ -14,17 +15,25 @@ class RegisterView extends GetView<RegisterController> {
       appBar: AppBar(
         title: const Text('Register Your Account'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FormBuilder(
-            key: controller.formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: FormBuilder(
+          key: controller.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 30,
+                ),
                 FormBuilderTextField(
                   name: 'full_name',
-                  decoration: const InputDecoration(labelText: 'Full Name'),
+                  decoration: authInputDecoration(context).copyWith(
+                    labelText: 'Fullname',
+                    filled: true,
+                  ),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(context),
                   ]),
@@ -33,7 +42,10 @@ class RegisterView extends GetView<RegisterController> {
                 FormBuilderTextField(
                   keyboardType: TextInputType.emailAddress,
                   name: 'email',
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: authInputDecoration(context).copyWith(
+                    labelText: 'Email',
+                    filled: true,
+                  ),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(context),
                     FormBuilderValidators.email(context),
@@ -42,7 +54,10 @@ class RegisterView extends GetView<RegisterController> {
                 const SizedBox(height: 10),
                 Obx(() => FormBuilderTextField(
                       name: 'password',
-                      decoration: const InputDecoration(labelText: 'Password'),
+                      decoration: authInputDecoration(context).copyWith(
+                        labelText: 'Password',
+                        filled: true,
+                      ),
                       obscureText: !controller.obsecure.value,
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
@@ -53,8 +68,9 @@ class RegisterView extends GetView<RegisterController> {
                 Obx(() => FormBuilderTextField(
                       name: 'confirm_password',
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
+                      decoration: authInputDecoration(context).copyWith(
                         labelText: 'Confirm Password',
+                        filled: true,
                       ),
                       obscureText: !controller.obsecure.value,
                       validator: FormBuilderValidators.compose([
@@ -71,6 +87,7 @@ class RegisterView extends GetView<RegisterController> {
                       ]),
                     )),
                 Obx(() => SwitchListTile(
+                    activeColor: Colors.indigo,
                     title: 'Show Password?'.cap.alignEnd,
                     value: controller.obsecure.value,
                     onChanged: (bool val) {
@@ -78,11 +95,10 @@ class RegisterView extends GetView<RegisterController> {
                     })),
                 const SizedBox(height: 10),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.indigo),
                   onPressed: () {
                     if (controller.formKey.currentState?.saveAndValidate() ??
                         false) {
-                      final keyField = controller.formKey.currentState;
-
                       controller.handleCreateUser();
                     }
                   },
@@ -91,26 +107,37 @@ class RegisterView extends GetView<RegisterController> {
                     child: 'Register Account'.text.alignCenter,
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Divider(),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MaterialButton(
-                      color: Theme.of(context).accentColor,
-                      onPressed: () {
-                        controller.formKey.currentState?.reset();
-                      },
-                      child: const Text('Reset Form',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.initialValue();
-                      },
-                      child: const Text('Generate',
-                          style: TextStyle(color: Colors.white)),
+                    'Utility Tools'.text,
+                    const SizedBox(height: 10),
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            controller.formKey.currentState?.reset();
+                          },
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: 'Reset Form'
+                                  .text
+                                  .color(Colors.white)
+                                  .alignCenter),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            controller.initialValue();
+                          },
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: 'Generate Data'
+                                  .text
+                                  .color(Colors.white)
+                                  .alignCenter),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -121,19 +148,4 @@ class RegisterView extends GetView<RegisterController> {
       ),
     );
   }
-
-  // void _handleCreateUser(String email, String password, String name) {
-  //   showDialogHelper();
-
-  //   controller
-  //       .createUser(name: name, email: email, password: password)
-  //       .then((value) {
-  //     showSnackbarSuccess();
-  //     Get.offAllNamed(Routes.AUTH);
-  //   }).onError((error, stackTrace) {
-  //     showSnackbarFail(ErrorModel(error.toString()));
-  //   }).whenComplete(() {
-  //     closeDialogHelper();
-  //   });
-  // }
 }
