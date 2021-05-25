@@ -37,15 +37,15 @@ flutter run
 ## Bugs: 
 - [ ] Create user under social media auth - if already in db skip function
 
+## Screenshot
 
-#### Screenshot
-
-<kbd><img src="https://github.com/jaasaria/flutter.FH2019/blob/master/sreenshots/gif.gif?raw=true" width="250" height="500"> </kbd>
-<kbd><img src="https://github.com/jaasaria/flutter.FH2019/blob/master/sreenshots/face_detection.gif?raw=true" width="250" height="500"> </kbd>
-
+<kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/1.jpg" width="250" height="500"> </kbd>
+<kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/2.jpg" width="250" height="500"> </kbd>
 <br>
+<kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/3.jpg" width="250" height="500"> </kbd>
+<kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/4.jpg" width="250" height="500"> </kbd>
 
-<kbd><img src="https://github.com/jaasaria/flutter.FH2019/blob/master/sreenshots/gif.gif?raw=true" width="250" height="500"> </kbd>
-<kbd><img src="https://github.com/jaasaria/flutter.FH2019/blob/master/sreenshots/face_detection.gif?raw=true" width="250" height="500"> </kbd>
+
+
 
 
