@@ -32,15 +32,6 @@ class MainView extends GetView<AuthController> {
                         },
                         child: const Text('Sign Out'),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          print('Before getting ');
-                          _user.getUser(controller.authUser!.uid);
-                          print('value of user: ');
-                          print(_user.user.toString());
-                        },
-                        child: const Text('Check Get User'),
-                      ),
                     ],
                   );
                 },

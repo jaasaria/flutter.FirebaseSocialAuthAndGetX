@@ -1,6 +1,6 @@
 import 'package:getx_main_example/pages/home/data/user_provider.dart';
 import 'package:getx_main_example/pages/home/domain/adapters/i_user_repository.dart';
-import 'package:getx_main_example/pages/home/domain/entity/user_model.dart';
+import 'package:getx_main_example/pages/home/domain/models/user_model.dart';
 
 class UserRepository implements IUserRepository {
   IUserProvider userProvider;

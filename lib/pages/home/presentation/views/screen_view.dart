@@ -4,7 +4,7 @@ import 'package:getx_main_example/pages/home/presentation/controllers/auth_contr
 import 'package:getx_main_example/pages/home/presentation/views/login_option_view.dart';
 import 'package:getx_main_example/pages/home/presentation/views/main_view.dart';
 
-class AuthView extends GetView<AuthController> {
+class ScreenView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

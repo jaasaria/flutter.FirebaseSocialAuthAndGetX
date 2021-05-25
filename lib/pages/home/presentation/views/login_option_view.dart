@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_main_example/pages/home/domain/entity/error_model.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
 import 'package:getx_main_example/pages/home/presentation/views/login_form_view.dart';
 import 'package:getx_main_example/pages/home/presentation/views/register_view.dart';
-import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper_view.dart';
 
-class LoginView extends GetView<AuthController> {
+class LoginOptionView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,25 +56,18 @@ class LoginView extends GetView<AuthController> {
   }
 
   void _handleTwitter() {
-    controller.loginInWithTwitter();
+    controller.loginWithTwitter();
   }
 
   void _handleGoogle() {
-    controller.loginInWithGoogle();
+    controller.loginWithGoogle();
   }
 
   void _handleFacebook() {
-    controller.loginInWithFacebook();
+    controller.loginWithFacebook();
   }
 
   void _handleAnonymous() {
-    showDialogHelper();
-
-    controller
-        .loginUserAsAnonymous()
-        .then((value) => showSnackbarSuccess())
-        .onError((error, stackTrace) =>
-            showSnackbarFail(ErrorModel(error.toString())))
-        .whenComplete(() => closeDialogHelper());
+    controller.loginAsAnonymous();
   }
 }

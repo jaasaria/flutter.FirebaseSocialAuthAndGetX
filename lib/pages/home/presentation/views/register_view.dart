@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:getx_main_example/pages/home/domain/entity/error_model.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
-import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper_view.dart';
-import 'package:getx_main_example/routes/app_pages.dart';
+import 'package:getx_main_example/pages/home/presentation/controllers/register_controller.dart';
 import 'package:textless/textless.dart';
 
-class RegisterView extends StatefulWidget {
-  @override
-  _RegisterViewState createState() => _RegisterViewState();
-}
-
-class _RegisterViewState extends State<RegisterView> {
-  final _formKey = GlobalKey<FormBuilderState>();
-
-  bool obscureText = false;
-  final controller = Get.find<AuthController>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      initialValue();
-    });
-  }
+class RegisterView extends GetView<RegisterController> {
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +18,7 @@ class _RegisterViewState extends State<RegisterView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FormBuilder(
-            key: _formKey,
+            key: controller.formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
@@ -58,42 +40,59 @@ class _RegisterViewState extends State<RegisterView> {
                   ]),
                 ),
                 const SizedBox(height: 10),
-                FormBuilderTextField(
-                  name: 'password',
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: !obscureText,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(context),
-                    // FormBuilderValidators.minLength(context, 6),
-                  ]),
+                Obx(() => FormBuilderTextField(
+                      name: 'password',
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      obscureText: !controller.obsecure.value,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                        FormBuilderValidators.minLength(context, 6),
+                      ]),
+                    )),
+                const SizedBox(height: 10),
+                Obx(() => FormBuilderTextField(
+                      name: 'confirm_password',
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: const InputDecoration(
+                        labelText: 'Confirm Password',
+                      ),
+                      obscureText: !controller.obsecure.value,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                        FormBuilderValidators.minLength(context, 6),
+                        (val) {
+                          if (val !=
+                              controller.formKey.currentState
+                                  ?.fields['password']?.value) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                      ]),
+                    )),
+                Obx(() => SwitchListTile(
+                    title: 'Show Password?'.cap.alignEnd,
+                    value: controller.obsecure.value,
+                    onChanged: (bool val) {
+                      controller.handleObsecure();
+                    })),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (controller.formKey.currentState?.saveAndValidate() ??
+                        false) {
+                      final keyField = controller.formKey.currentState;
+
+                      controller.handleCreateUser();
+                    }
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: 'Register Account'.text.alignCenter,
+                  ),
                 ),
                 const SizedBox(height: 10),
-                FormBuilderTextField(
-                  name: 'confirm_password',
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    labelText: 'Confirm Password',
-                  ),
-                  obscureText: !obscureText,
-                  validator: FormBuilderValidators.compose([
-                    (val) {
-                      if (val !=
-                          _formKey.currentState?.fields['password']?.value) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
-                  ]),
-                ),
-                SwitchListTile(
-                    title: 'Show Password?'.cap.alignEnd,
-                    value: obscureText,
-                    onChanged: (bool val) {
-                      setState(() {
-                        obscureText = val;
-                      });
-                    }),
+                const Divider(),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -101,24 +100,16 @@ class _RegisterViewState extends State<RegisterView> {
                     MaterialButton(
                       color: Theme.of(context).accentColor,
                       onPressed: () {
-                        _formKey.currentState?.reset();
+                        controller.formKey.currentState?.reset();
                       },
                       child: const Text('Reset Form',
                           style: TextStyle(color: Colors.white)),
                     ),
-                    MaterialButton(
-                      color: Theme.of(context).accentColor,
+                    ElevatedButton(
                       onPressed: () {
-                        // if (_formKey.currentState?.saveAndValidate() ?? false) {
-                        final keyField = _formKey.currentState;
-                        _handleCreateUser(
-                            keyField!.fields['email']!.value.toString(),
-                            keyField.fields['password']!.value.toString(),
-                            keyField.fields['full_name']!.value.toString());
-                        // }
-                        // print(_formKey.currentState?.value);
+                        controller.initialValue();
                       },
-                      child: const Text('Register Account',
+                      child: const Text('Generate',
                           style: TextStyle(color: Colors.white)),
                     ),
                   ],
@@ -131,27 +122,18 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  void initialValue() {
-    _formKey.currentState?.patchValue({
-      'full_name': 'john andrew asaria',
-      'email': 'asaria.ja@gmail.com',
-      'password': '123456',
-      'confirm_password': '123456',
-    });
-  }
+  // void _handleCreateUser(String email, String password, String name) {
+  //   showDialogHelper();
 
-  void _handleCreateUser(String email, String password, String name) {
-    showDialogHelper();
-
-    controller
-        .createUser(name: name, email: email, password: password)
-        .then((value) {
-      showSnackbarSuccess();
-      Get.offAllNamed(Routes.AUTH);
-    }).onError((error, stackTrace) {
-      showSnackbarFail(ErrorModel(error.toString()));
-    }).whenComplete(() {
-      closeDialogHelper();
-    });
-  }
+  //   controller
+  //       .createUser(name: name, email: email, password: password)
+  //       .then((value) {
+  //     showSnackbarSuccess();
+  //     Get.offAllNamed(Routes.AUTH);
+  //   }).onError((error, stackTrace) {
+  //     showSnackbarFail(ErrorModel(error.toString()));
+  //   }).whenComplete(() {
+  //     closeDialogHelper();
+  //   });
+  // }
 }

@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
 import 'package:getx_main_example/pages/home/presentation/views/auth_view.dart';
-import 'package:getx_main_example/pages/home/presentation/views/login_view.dart';
+import 'package:getx_main_example/pages/home/presentation/views/login_form_view.dart';
 import 'package:getx_main_example/pages/home/presentation/views/main_view.dart';
 
 import '../pages/home/bindings/home_binding.dart';
-import '../pages/home/presentation/views/country_view.dart';
-import '../pages/home/presentation/views/details_view.dart';
-import '../pages/home/presentation/views/home_view.dart';
 
 part 'app_routes.dart';
 
@@ -21,27 +18,11 @@ class AppPages {
     ),
     GetPage(
       name: Routes.LOGIN,
-      page: () => LoginView(),
+      page: () => LoginFormView(),
     ),
     GetPage(
       name: Routes.MAIN,
       page: () => MainView(),
     ),
-    GetPage(
-        name: Routes.HOME,
-        page: () => HomeView(),
-        binding: HomeBinding(),
-        children: [
-          GetPage(
-            name: Routes.COUNTRY,
-            page: () => CountryView(),
-            children: [
-              GetPage(
-                name: Routes.DETAILS,
-                page: () => DetailsView(),
-              ),
-            ],
-          ),
-        ]),
   ];
 }

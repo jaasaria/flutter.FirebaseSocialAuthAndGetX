@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:getx_main_example/pages/home/domain/entity/user_model.dart';
+import 'package:getx_main_example/pages/home/domain/models/user_model.dart';
 
 abstract class IUserProvider {
   Future<UserModel> getUser(String id);

@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:getx_main_example/pages/home/domain/entity/error_model.dart';
+import 'package:getx_main_example/pages/home/domain/entity/failure.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
-import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper_view.dart';
+import 'package:getx_main_example/pages/home/presentation/controllers/login_controller.dart';
+import 'package:getx_main_example/pages/home/presentation/views/helper/auth_helper.dart';
 import 'package:getx_main_example/routes/app_pages.dart';
 
-class LoginFormView extends StatefulWidget {
-  @override
-  _LoginFormViewState createState() => _LoginFormViewState();
-}
-
-class _LoginFormViewState extends State<LoginFormView> {
-  final _formKey = GlobalKey<FormBuilderState>();
-  final controller = Get.find<AuthController>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      initialValue();
-    });
-  }
+class LoginFormView extends GetView<LoginController> {
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +20,7 @@ class _LoginFormViewState extends State<LoginFormView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FormBuilder(
-            key: _formKey,
+            key: controller.formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
@@ -60,8 +47,9 @@ class _LoginFormViewState extends State<LoginFormView> {
                 MaterialButton(
                   color: Theme.of(context).accentColor,
                   onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      final keyField = _formKey.currentState;
+                    if (controller.formKey.currentState?.saveAndValidate() ??
+                        false) {
+                      final keyField = controller.formKey.currentState;
                       _handleLogin(keyField!.fields['email']!.value.toString(),
                           keyField.fields['password']!.value.toString());
                     }
@@ -78,21 +66,7 @@ class _LoginFormViewState extends State<LoginFormView> {
     );
   }
 
-  void initialValue() {
-    _formKey.currentState?.patchValue({
-      'email': 'asaria.ja@gmail.com',
-      'password': '123456',
-    });
-  }
-
   void _handleLogin(String email, String password) {
-    showDialogHelper();
-
-    controller.loginUser(email, password).then((value) {
-      Get.offAllNamed(Routes.AUTH);
-      showSnackbarSuccess();
-    }).onError((error, stackTrace) {
-      showSnackbarFail(ErrorModel(error.toString()));
-    }).whenComplete(() => closeDialogHelper());
+    authController.loginUser(email, password);
   }
 }

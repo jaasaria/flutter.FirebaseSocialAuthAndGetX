@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_main_example/pages/home/domain/entity/error_model.dart';
+import 'package:getx_main_example/pages/home/domain/entity/failure.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/user_controller.dart';
 
 void showSnackbarSuccess() {
@@ -14,7 +14,7 @@ void showSnackbarSuccess() {
   }
 }
 
-void showSnackbarFail(ErrorModel error) {
+void showSnackbarFail(Failure error) {
   if (Get.isSnackbarOpen == true) {
     Get.back();
   }
@@ -25,7 +25,7 @@ void showSnackbarFail(ErrorModel error) {
     'Something went wrong!',
     error.message,
     snackPosition: SnackPosition.BOTTOM,
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 5),
   );
 }
 

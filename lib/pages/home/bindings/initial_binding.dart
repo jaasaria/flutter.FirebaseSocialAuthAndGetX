@@ -7,6 +7,8 @@ import 'package:getx_main_example/pages/home/domain/adapters/i_auth_repository.d
 import 'package:getx_main_example/pages/home/domain/adapters/i_user_repository.dart';
 import 'package:getx_main_example/pages/home/domain/firebase/firebase_auth_instance.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/auth_controller.dart';
+import 'package:getx_main_example/pages/home/presentation/controllers/login_controller.dart';
+import 'package:getx_main_example/pages/home/presentation/controllers/register_controller.dart';
 import 'package:getx_main_example/pages/home/presentation/controllers/user_controller.dart';
 
 class InitialBinding implements Bindings {
@@ -22,8 +24,15 @@ class InitialBinding implements Bindings {
 
     // Auth
     Get.put<IAuthFirebaseProvider>(AuthFirebaseProvider(), permanent: true);
-    Get.put<IAuthRepository>(AuthRepository(authProvider: Get.find()),
+    Get.put<IAuthRepository>(
+        AuthRepository(authProvider: Get.find(), userController: Get.find()),
         permanent: true);
+
     Get.put(AuthController(repository: Get.find()), permanent: true);
+
+    Get.lazyPut<RegisterController>(
+        () => RegisterController(repository: Get.find()),
+        fenix: true);
+    Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
   }
 }

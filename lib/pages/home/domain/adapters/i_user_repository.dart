@@ -1,4 +1,4 @@
-import 'package:getx_main_example/pages/home/domain/entity/user_model.dart';
+import 'package:getx_main_example/pages/home/domain/models/user_model.dart';
 
 abstract class IUserRepository {
   Future<UserModel> getUser(String id);
