@@ -39,9 +39,17 @@ flutter run
 - [ ] Social media auth - skip user creation if already exist in the db
 - [ ] Google auth - if email already use, google auth still login
 
+
+
+## Video
+
+[![Firebase Authentication using GetX Package](https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/1.jpg)](https://www.youtube.com/watch?v=0EFcIMERgXQ "Firebase Authentication using GetX Package")
+
+- [Youtube Video Link](https://www.youtube.com/watch?v=0EFcIMERgXQ)
+
+
 ## Screenshot
 
-<kbd><img src="https://www.youtube.com/watch?v=0EFcIMERgXQ" width="250" height="500"> </kbd>
 <kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/1.jpg" width="250" height="500"> </kbd>
 <kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/2.jpg" width="250" height="500"> </kbd>
 <br>
