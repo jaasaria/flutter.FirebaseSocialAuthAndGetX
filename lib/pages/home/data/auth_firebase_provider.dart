@@ -35,7 +35,14 @@ class AuthFirebaseProvider implements IAuthFirebaseProvider {
 
   @override
   Future<UserCredential> loginUser(String email, String password) async {
-    return _auth.signInWithEmailAndPassword(email: email, password: password);
+    try {
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (error) {
+      throw Failure(error.message.toString());
+    } catch (e) {
+      throw Failure(e.toString());
+    }
   }
 
   @override
@@ -65,7 +72,9 @@ class AuthFirebaseProvider implements IAuthFirebaseProvider {
       // final imageUrl = await fb.getProfileImageUrl(width: 100);
       // final email = await fb.getUserEmail();
 
-      return FirebaseAuth.instance.signInWithCredential(credential);
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (error) {
+      throw Failure(error.message.toString());
     } catch (e) {
       throw Failure(e.toString());
     }
@@ -81,6 +90,7 @@ class AuthFirebaseProvider implements IAuthFirebaseProvider {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       throw Failure(e.toString());
@@ -112,9 +122,34 @@ class AuthFirebaseProvider implements IAuthFirebaseProvider {
   @override
   Future<void> logoutUser() async {
     try {
+      late String provider = '';
+      (_auth.currentUser!.providerData.isNotEmpty)
+          ? provider = _auth.currentUser!.providerData[0].providerId.toString()
+          : provider = 'empty';
+
+      switch (provider) {
+        case 'facebook.com':
+          await fbOut();
+          break;
+        case 'google.com':
+          await googleOut();
+          break;
+        default:
+      }
+
       return _auth.signOut();
     } catch (e) {
       throw Failure(e.toString());
     }
+  }
+
+  Future fbOut() async {
+    final fb = FacebookLogin();
+    await fb.logOut();
+  }
+
+  Future googleOut() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
   }
 }

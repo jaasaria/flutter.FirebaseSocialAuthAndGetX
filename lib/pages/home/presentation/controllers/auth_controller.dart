@@ -65,16 +65,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void logoutUser() {
-    // check for the social auth provider
-    // print(_auth.currentUser?.providerData[0].providerId.toString());
-
-    // final fb = FacebookLogin();
-    // await fb.logOut();
-
-    // final GoogleSignIn googleSignIn = GoogleSignIn();
-    // await googleSignIn.signOut();
-
+  Future<void> logoutUser() async {
     repository.logoutUser();
     _storeUser.logoutUser();
   }

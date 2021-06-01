@@ -3,12 +3,12 @@
 
 ## Getting Started
 
-I created this project for firebase auth reference. If you like it support me by clicking the star button above. Share and feel free to contribute. Happy coding 💖🎉✨
+I created this project for future reference. If you like it support me by clicking the star button. Share and feel free to contribute. Happy coding 💖🎉✨
 
 
 ## Setup
 
-GetX Module Structure
+GetX Module Structure Used
 https://github.com/kauemurakami/getx_pattern
 
 Firebase Setup
@@ -31,14 +31,17 @@ flutter run
 
 ## Work To Do:  
 - [ ] Phone Authentication
-- [ ] Better Error Handling - Let's talk regards this 
+- [ ] Better Error Handling 
+- [ ] Testing - sample testing for provider , repository and controller 
 
 
 ## Bugs: 
-- [ ] Create user under social media auth - if already in db skip function
+- [ ] Social media auth - skip user creation if already exist in the db
+- [ ] Google auth - if email already use, google auth still login
 
 ## Screenshot
 
+<kbd><img src="https://www.youtube.com/watch?v=0EFcIMERgXQ" width="250" height="500"> </kbd>
 <kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/1.jpg" width="250" height="500"> </kbd>
 <kbd><img src="https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/2.jpg" width="250" height="500"> </kbd>
 <br>

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:getx_main_example/pages/home/data/auth_firebase_provider.dart';
 import 'package:getx_main_example/pages/home/domain/adapters/i_auth_repository.dart';
 import 'package:getx_main_example/pages/home/domain/models/user_model.dart';
@@ -80,7 +78,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<void> loginWithGoogle() async {
     try {
-      final value = await authProvider.loginWithFacebook();
+      final value = await authProvider.loginWithGoogle();
       final userModel = UserModel(
           uid: value.user!.uid,
           name: value.user?.displayName ?? 'Google',

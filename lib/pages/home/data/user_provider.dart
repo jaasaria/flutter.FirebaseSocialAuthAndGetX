@@ -30,9 +30,8 @@ class UserProvider implements IUserProvider {
 
   @override
   Future<UserModel> getUser(String id) async {
-    print('getting user from cloud store: $id');
     try {
-      final _doc = await _store.collection("users").doc(id).get();
+      // final _doc = await _store.collection("users").doc(id).get();
 
       final userRef = await _store
           .collection("users")
@@ -44,29 +43,25 @@ class UserProvider implements IUserProvider {
           .doc(id)
           .get();
 
-      if (userRef.exists) {
-        print('user is exist');
-      }
-      print(_doc.data());
-
-      UserModel user = userRef.data()!;
-      print(user.toString());
+      final UserModel user = userRef.data()!;
+      // print(user);
       return user;
     } catch (e) {
-      print('getting user from cloud store - error');
-      print(e);
       rethrow;
     }
   }
 
   @override
   Future<UserModel> storeUser(UserModel request) async {
+    // TODO: Skip if user already in the DB
     final user =
         _store.collection("users").doc(request.uid).set(request.toJson());
 
     user.then((value) {
-      print("User Added");
-    }).catchError((error) => print("Failed to add user: $error"));
+      // print('added user successfuly');
+    }).catchError((error) {
+      // print("added user failed : $error");
+    });
 
     return request;
   }
