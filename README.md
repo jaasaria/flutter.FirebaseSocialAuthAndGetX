@@ -42,9 +42,6 @@ flutter run
 
 
 ## Video
-
-[![Firebase Authentication using GetX Package](https://github.com/jaasaria/flutter.FirebaseSocialAuthAndGetX/blob/main/assets/screenshot/1.jpg)](https://www.youtube.com/watch?v=0EFcIMERgXQ "Firebase Authentication using GetX Package")
-
 - [Youtube Video Link](https://www.youtube.com/watch?v=0EFcIMERgXQ)
 
 
